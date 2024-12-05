@@ -1,0 +1,116 @@
+#include <iostream>
+using namespace std;
+
+class Complex {
+public:
+    int real;
+    int imag;
+
+    Complex() {
+        real = 0;
+        imag = 0;
+    }
+
+    void input() {
+        cout << "\nEnter value of real part:\t";
+        cin >> real;
+        cout << "\nEnter value of imaginary part:\t";
+        cin >> imag;
+    }
+
+    void display() const {
+        cout << "\nComplex number:\t" << real << "+" << imag << "i" << endl;
+    }
+
+    
+    friend Complex operator+(Complex &a, Complex &b);
+    friend Complex operator-(Complex &a, Complex &b);
+    friend Complex operator*(Complex &a, Complex &b);
+    friend Complex operator/(Complex &a, Complex &b);
+};
+
+
+Complex operator+(Complex &a, Complex &b) {
+    Complex temp;
+    temp.real = a.real + b.real;
+    temp.imag = a.imag + b.imag;
+    return temp;
+}
+
+
+Complex operator-(Complex &a, Complex &b) {
+    Complex temp;
+    temp.real = a.real - b.real;
+    temp.imag = a.imag - b.imag;
+    return temp;
+}
+
+
+Complex operator*(Complex &a, Complex &b) {
+    Complex temp;
+    temp.real = a.real * b.real - a.imag * b.imag;
+    temp.imag = a.real * b.imag + a.imag * b.real;
+    return temp;
+}
+
+
+Complex operator/(Complex &a, Complex &b) {
+    Complex temp;
+    int denominator = b.real * b.real + b.imag * b.imag;
+    temp.real = (a.real * b.real + a.imag * b.imag) / denominator;
+    temp.imag = (a.imag * b.real - a.real * b.imag) / denominator;
+    return temp;
+}
+
+int main() {
+    Complex obj1, obj2, obj3;
+    int choice;
+
+    cout << "\n1. ";
+    obj1.input();
+    cout << "\n2. ";
+    obj2.input();
+
+    do {
+        cout << "\nEnter your choice:\t";
+        cout << "\n1. Addition";
+        cout << "\n2. Subtraction";
+        cout << "\n3. Multiplication";
+        cout << "\n4. Division";
+        cout << "\n5. Exit\n";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "\nAddition:\t";
+                obj3 = obj1 + obj2;
+                obj3.display();
+                break;
+            case 2:
+                cout << "\nSubtraction:\t";
+                obj3 = obj1 - obj2;
+                obj3.display();
+                break;
+            case 3:
+                cout << "\nMultiplication:\t";
+                obj3 = obj1 * obj2;
+                obj3.display();
+                break;
+            case 4:
+                cout << "\nDivision:\t";
+                obj3 = obj1 / obj2;
+                obj3.display();
+                break;
+            case 5:
+                cout << "\nExiting......!\n";
+                break;
+            default:
+                cout << "\nInvalid choice.....!";
+                cout << "\nYou want to continue? (1/5): ";
+                cin >> choice;
+        }
+        cout << endl;
+    } while (choice != 5);
+
+    return 0;
+}

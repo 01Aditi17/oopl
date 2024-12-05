@@ -1,0 +1,179 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+    int id;
+
+public:
+    Person() {}
+    Person(string n, int i) : name(n), id(i) {}
+
+    int getID() const {
+        return id;
+    }
+};
+
+class Teacher : public Person {
+public:
+    string department;
+    string qualification;
+
+    void acceptTeacherDetails() {
+        cout << "Enter Teacher's Name: ";
+        cin >> name;
+        cout << "Enter Teacher's ID: ";
+        cin >> id;
+        cout << "Enter Department: ";
+        cin >> department;
+        cout << "Enter Qualification: ";
+        cin >> qualification;
+    }
+
+    void displayTeacherDetails() const {
+        cout << "Name: " << name << endl;
+        cout << "ID: " << id << endl;
+        cout << "Department: " << department << endl;
+        cout << "Qualification: " << qualification << endl;
+    }
+};
+
+class Student : public Person {
+public:
+    string course;
+    int year;
+
+    void acceptStudentDetails() {
+        cout << "Enter Student's Name: ";
+        cin >> name;
+        cout << "Enter Student's ID: ";
+        cin >> id;
+        cout << "Enter Course: ";
+        cin >> course;
+        cout << "Enter Year: ";
+        cin >> year;
+    }
+
+    void displayStudentDetails() const {
+        cout << "Name: " << name << endl;
+        cout << "ID: " << id << endl;
+        cout << "Course: " << course << endl;
+        cout << "Year: " << year << endl;
+    }
+};
+
+class LibraryStaff {
+public:
+    void issueBook(int num, Teacher teachers[], Student students[]) {
+        int choice;
+        do {
+            cout << "\nChoose an option:\n";
+            cout << "1. Issue Book to Teacher\n";
+            cout << "2. Issue Book to Student\n";
+            cout << "3. Exit\n";
+            cout << "Enter your choice: ";
+            cin >> choice;
+
+            switch (choice) {
+                case 1: {
+                    int search_id;
+                    cout << "Enter Teacher's ID to issue book: ";
+                    cin >> search_id;
+                    bool found = false;
+                    for (int i = 0; i < num; i++) {
+                        if (teachers[i].getID() == search_id) {
+                            cout << "Teacher found:\n";
+                            teachers[i].displayTeacherDetails();
+                            cout << "Book has been issued to this teacher.\n";
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        cout << "Teacher not found!\n";
+                    }
+                    break;
+                }
+                case 2: {
+                    int search_id;
+                    cout << "Enter Student's ID to issue book: ";
+                    cin >> search_id;
+                    bool found = false;
+                    for (int i = 0; i < num; i++) {
+                        if (students[i].getID() == search_id) {
+                            cout << "Student found:\n";
+                            students[i].displayStudentDetails();
+                            cout << "Book has been issued to this student.\n";
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        cout << "Student not found!\n";
+                    }
+                    break;
+                }
+                case 3:
+                    cout << "Exiting...\n";
+                    break;
+                default:
+                    cout << "Invalid choice!\n";
+                    break;
+            }
+        } while (choice != 3);
+    }
+};
+
+int main() {
+    Teacher teachers[5];
+    Student students[5];
+    LibraryStaff library;
+    int choice;
+    int numTeachers = 0, numStudents = 0;
+
+    do {
+        cout << "\nLibrary Menu:\n";
+        cout << "1. Add Teacher\n";
+        cout << "2. Add Student\n";
+        cout << "3. Issue Book\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the number of teachers: ";
+                cin >> numTeachers;
+                for (int i = 0; i < numTeachers; i++) {
+                    cout << "\nEntering details for Teacher " << i + 1 << ":\n";
+                    teachers[i].acceptTeacherDetails();
+                }
+                break;
+
+            case 2:
+                cout << "Enter the number of students: ";
+                cin >> numStudents;
+                for (int i = 0; i < numStudents; i++) {
+                    cout << "\nEntering details for Student " << i + 1 << ":\n";
+                    students[i].acceptStudentDetails();
+                }
+                break;
+
+            case 3:
+                library.issueBook(max(numTeachers, numStudents), teachers, students);
+                break;
+
+            case 4:
+                cout << "Exiting...\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}

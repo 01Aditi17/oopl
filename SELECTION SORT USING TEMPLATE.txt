@@ -1,0 +1,55 @@
+
+#include<iostream>
+using namespace std;
+template <class T,int s>
+class A{
+    public:
+    T a[s];
+    int size;
+    void getdata()
+    {
+         int i;
+         cout<<"Enter size of an array:";
+         cin>>size;
+        cout<<"Enter elements of an array:"<<endl;
+        for(i=0;i<size;i++)
+        {
+            cout<<"a["<<i<<"]=";
+            cin>>a[i];
+        }
+    }
+    void sorting()
+    {
+        int i,j;
+        for(i=0;i<size;i++)
+        {
+            for(j=i+1;j<size;j++)
+            {
+                if(a[i]>a[j])
+                {
+                    T temp=a[i];
+                    a[i]=a[j];
+                    a[j]=temp;
+                }
+            }
+         }
+    }
+
+    void display()
+    {
+         int i;
+        for(i=0;i<size;i++)
+        {
+            cout<<"a["<<i<<"]="<<a[i]<<"\t";
+        }
+        cout<<endl;
+    }
+};
+int main()
+{
+    A<int,4>a1;
+    a1.getdata();
+    a1.sorting();
+    a1.display();
+    return 0;
+}
